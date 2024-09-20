@@ -1,0 +1,39 @@
+day0:
+    build:
+      context: .
+    networks:
+      - nwML
+    environment:
+      - DATA_LABEL
+    volumes:
+      - vl:/app
+
+  database:
+    build:
+      context: ./database
+    ports: 
+      - "5432:5432"
+    networks:
+      - coffee
+    environment:
+      - DB_USER
+      - DB_PASSWORD
+    volumes:
+      - db:/app
+
+volumes:
+  vl:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}
+
+networks:
+  coffee:
